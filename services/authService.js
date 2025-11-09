@@ -1,8 +1,11 @@
 const User = require('../models/User');
+const RefreshToken = require('../models/RefreshToken');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key-change-in-production';
 
 // Validate signup input
 const validateSignupInput = (username, password) => {
@@ -36,15 +39,17 @@ const hashPassword = async (password) => {
 };
 
 // Create new user
-const createUser = async (username, hashedPassword) => {
+const createUser = async (username, hashedPassword, role = 'user') => {
     const newUser = new User({
         username,
-        password: hashedPassword
+        password: hashedPassword,
+        role
     });
     await newUser.save();
     return {
         id: newUser._id,
-        username: newUser.username
+        username: newUser.username,
+        role: newUser.role
     };
 };
 
@@ -58,16 +63,55 @@ const verifyPassword = async (password, hashedPassword) => {
     return await bcrypt.compare(password, hashedPassword);
 };
 
-// Generate JWT token
-const generateToken = (userId, username) => {
+// Generate access token
+const generateAccessToken = (userId, username, role) => {
     return jwt.sign(
         { 
             userId,
-            username
+            username,
+            role
         },
         JWT_SECRET,
-        { expiresIn: '24h' }
+        { expiresIn: '15m' } // Short-lived access token
     );
+};
+
+// Generate refresh token
+const generateRefreshToken = () => {
+    return crypto.randomBytes(40).toString('hex');
+};
+
+// Save refresh token to database
+const saveRefreshToken = async (token, userId) => {
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7); // 7 days expiry
+
+    const refreshToken = new RefreshToken({
+        token,
+        user: userId,
+        expiresAt
+    });
+    await refreshToken.save();
+    return refreshToken;
+};
+
+// Verify refresh token
+const verifyRefreshToken = async (token) => {
+    const refreshToken = await RefreshToken.findOne({ token });
+    if (!refreshToken || refreshToken.expiresAt < new Date()) {
+        return null;
+    }
+    return refreshToken;
+};
+
+// Delete refresh token
+const deleteRefreshToken = async (token) => {
+    await RefreshToken.deleteOne({ token });
+};
+
+// Delete all refresh tokens for a user
+const deleteAllUserRefreshTokens = async (userId) => {
+    await RefreshToken.deleteMany({ user: userId });
 };
 
 // Signup service
@@ -114,21 +158,66 @@ const login = async (username, password) => {
         throw { status: 401, message: 'Invalid username or password' };
     }
 
-    // Generate token
-    const token = generateToken(user._id, user.username);
+    // Generate tokens
+    const accessToken = generateAccessToken(user._id, user.username, user.role);
+    const refreshToken = generateRefreshToken();
+    await saveRefreshToken(refreshToken, user._id);
 
     return {
-        token,
+        accessToken,
+        refreshToken,
         user: {
             id: user._id,
-            username: user.username
+            username: user.username,
+            role: user.role
         },
         message: 'Logged in successfully'
     };
 };
 
+// Refresh access token
+const refreshAccessToken = async (refreshToken) => {
+    const tokenDoc = await verifyRefreshToken(refreshToken);
+    if (!tokenDoc) {
+        throw { status: 401, message: 'Invalid or expired refresh token' };
+    }
+
+    const user = await User.findById(tokenDoc.user);
+    if (!user) {
+        throw { status: 401, message: 'User not found' };
+    }
+
+    const accessToken = generateAccessToken(user._id, user.username, user.role);
+
+    return {
+        accessToken,
+        user: {
+            id: user._id,
+            username: user.username,
+            role: user.role
+        }
+    };
+};
+
+// Logout service
+const logout = async (refreshToken) => {
+    if (refreshToken) {
+        await deleteRefreshToken(refreshToken);
+    }
+    return { message: 'Logged out successfully' };
+};
+
+// Logout from all devices
+const logoutAll = async (userId) => {
+    await deleteAllUserRefreshTokens(userId);
+    return { message: 'Logged out from all devices successfully' };
+};
+
 module.exports = {
     signup,
-    login
+    login,
+    refreshAccessToken,
+    logout,
+    logoutAll
 };
 
