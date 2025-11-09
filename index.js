@@ -28,7 +28,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/task-mana
 
 // Routes
 loginRoute(app);
-taskRoute(app);
+//taskRoute(app);
 
 // Error handling middleware (must be last)
 app.use(errorLogger);

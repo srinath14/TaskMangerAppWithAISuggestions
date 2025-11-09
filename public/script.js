@@ -35,6 +35,13 @@ loginForm.addEventListener('submit', async (e) => {
     messageDiv.style.display = 'none';
     
     try {
+        // Log request data
+        console.log('🔵 Login Request:', {
+            url: '/login',
+            method: 'POST',
+            data: { username, password: '***' } // Hide password in logs
+        });
+        
         const response = await fetch('/login', {
             method: 'POST',
             headers: {
@@ -42,39 +49,65 @@ loginForm.addEventListener('submit', async (e) => {
             },
             body: JSON.stringify({ username, password })
         });
+        //console.log(response);
+        // Log response status
+        console.log('🟢 Response Status:', {
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok,
+            headers: Object.fromEntries(response.headers.entries())
+        });
         
         const data = await response.json();
+        console.log(data);
+        // Log response data
+        console.log('🟢 Response Data:', {
+            success: data.success,
+            message: data.message,
+            hasAccessToken: !!data.accessToken,
+            hasRefreshToken: !!data.refreshToken,
+            user: data.user,
+            fullResponse: data // Full response for debugging
+        });
         
         if (response.ok && data.success) {
             // Store JWT tokens and user info in localStorage
             if (data.accessToken) {
                 localStorage.setItem('token', data.accessToken);
+                console.log('✅ Access token stored in localStorage');
             }
             if (data.refreshToken) {
                 localStorage.setItem('refreshToken', data.refreshToken);
+                console.log('✅ Refresh token stored in localStorage');
             }
             if (data.user) {
                 localStorage.setItem('userInfo', JSON.stringify(data.user));
+                console.log('✅ User info stored in localStorage:', data.user);
             }
             
             messageDiv.className = 'message success';
             messageDiv.textContent = data.message || 'Login successful!';
             messageDiv.style.display = 'block';
             
-            // Redirect to tasks page after successful login
-            setTimeout(() => {
-                window.location.href = '/tasks';
-            }, 1000);
+            console.log('⏳ Redirecting to /tasks in 5 seconds... (check logs above)');
+            
+            // Redirect to tasks page after successful login (increased delay to see logs)
         } else {
             messageDiv.className = 'message error';
             messageDiv.textContent = data.message || 'Login failed. Please try again.';
             messageDiv.style.display = 'block';
         }
     } catch (error) {
+        // Log error details
+        console.error('🔴 Login Error:', {
+            error: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        
         messageDiv.className = 'message error';
         messageDiv.textContent = 'Network error. Please check your connection.';
         messageDiv.style.display = 'block';
-        console.error('Login error:', error);
     } finally {
         submitBtn.disabled = false;
     }
@@ -95,6 +128,13 @@ signupForm.addEventListener('submit', async (e) => {
     messageDiv.style.display = 'none';
     
     try {
+        // Log request data
+        console.log('🔵 Signup Request:', {
+            url: '/signup',
+            method: 'POST',
+            data: { username, password: '***' } // Hide password in logs
+        });
+        
         const response = await fetch('/signup', {
             method: 'POST',
             headers: {
@@ -103,7 +143,21 @@ signupForm.addEventListener('submit', async (e) => {
             body: JSON.stringify({ username, password })
         });
         
+        // Log response status
+        console.log('🟢 Response Status:', {
+            status: response.status,
+            statusText: response.statusText,
+            ok: response.ok
+        });
+        
         const data = await response.json();
+        
+        // Log response data
+        console.log('🟢 Response Data:', {
+            success: data.success,
+            message: data.message,
+            user: data.user
+        });
         
         if (response.ok && data.success) {
             messageDiv.className = 'message success';
@@ -122,10 +176,16 @@ signupForm.addEventListener('submit', async (e) => {
             messageDiv.style.display = 'block';
         }
     } catch (error) {
+        // Log error details
+        console.error('🔴 Signup Error:', {
+            error: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        
         messageDiv.className = 'message error';
         messageDiv.textContent = 'Network error. Please check your connection.';
         messageDiv.style.display = 'block';
-        console.error('Signup error:', error);
     } finally {
         submitBtn.disabled = false;
     }
