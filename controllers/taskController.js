@@ -3,10 +3,25 @@ const taskService = require('../services/taskService');
 // Get all tasks for the authenticated user
 const getTasks = async (req, res) => {
     try {
-        const tasks = await taskService.getUserTasks(req.user.userId);
+        const options = {
+            page: req.query.page,
+            limit: req.query.limit,
+            sortBy: req.query.sortBy,
+            sortOrder: req.query.sortOrder,
+            status: req.query.status,
+            priority: req.query.priority,
+            category: req.query.category,
+            project: req.query.project,
+            completed: req.query.completed !== undefined ? req.query.completed === 'true' : undefined,
+            dueDateFrom: req.query.dueDateFrom,
+            dueDateTo: req.query.dueDateTo
+        };
+
+        const result = await taskService.getUserTasks(req.user.userId, options);
         return res.status(200).json({
             success: true,
-            tasks: tasks
+            tasks: result.tasks,
+            pagination: result.pagination
         });
     } catch (error) {
         console.error('Get tasks error:', error);
@@ -45,8 +60,8 @@ const getTask = async (req, res) => {
 // Create a new task
 const createTask = async (req, res) => {
     try {
-        const { title, description, completed } = req.body;
-        const task = await taskService.createTask(title, description, completed, req.user.userId);
+        const taskData = req.body;
+        const task = await taskService.createTask(taskData, req.user.userId);
 
         return res.status(201).json({
             success: true,

@@ -1,0 +1,38 @@
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:08:24"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:08:24"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:08:33"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:08:33"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:09:25"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:09:25"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:10:06"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:10:06"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:11:52"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:11:52"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:12:17"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:12:17"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:12:27"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:12:27"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:12:54"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:12:54"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:13:05"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:13:05"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:13:18"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:13:18"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:13:47"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:13:47"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:13:49"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:13:49"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:13:51"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:13:51"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:14:06"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:14:06"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:14:48"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:14:48"}
+{"level":"info","message":"Server started successfully on port 3001","service":"task-manager","timestamp":"2025-11-08 23:15:29"}
+{"level":"info","message":"Connected to MongoDB","service":"task-manager","timestamp":"2025-11-08 23:15:29"}
+{"duration":"34ms","ip":"::1","level":"info","message":"HTTP Request","method":"PUT","service":"task-manager","status":200,"timestamp":"2025-11-08 23:16:41","url":"/api/tasks/690f7f199ef1fa810c0d3334","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"11ms","ip":"::1","level":"info","message":"HTTP Request","method":"GET","service":"task-manager","status":200,"timestamp":"2025-11-08 23:16:41","url":"/api/tasks","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"12ms","ip":"::1","level":"info","message":"HTTP Request","method":"POST","service":"task-manager","status":201,"timestamp":"2025-11-08 23:16:51","url":"/api/tasks","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"8ms","ip":"::1","level":"info","message":"HTTP Request","method":"GET","service":"task-manager","status":200,"timestamp":"2025-11-08 23:16:51","url":"/api/tasks","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"12ms","ip":"::1","level":"info","message":"HTTP Request","method":"DELETE","service":"task-manager","status":200,"timestamp":"2025-11-08 23:17:00","url":"/api/tasks/690f7f199ef1fa810c0d3334","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}
+{"duration":"13ms","ip":"::1","level":"info","message":"HTTP Request","method":"GET","service":"task-manager","status":200,"timestamp":"2025-11-08 23:17:00","url":"/api/tasks","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}

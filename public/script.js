@@ -46,9 +46,14 @@ loginForm.addEventListener('submit', async (e) => {
         const data = await response.json();
         
         if (response.ok && data.success) {
-            // Store JWT token and user info in localStorage
-            if (data.token) {
-                localStorage.setItem('token', data.token);
+            // Store JWT tokens and user info in localStorage
+            if (data.accessToken) {
+                localStorage.setItem('token', data.accessToken);
+            }
+            if (data.refreshToken) {
+                localStorage.setItem('refreshToken', data.refreshToken);
+            }
+            if (data.user) {
                 localStorage.setItem('userInfo', JSON.stringify(data.user));
             }
             
